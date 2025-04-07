@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iot_relay_app/features/home/bloc/relay_event.dart';
-import 'package:iot_relay_app/features/home/bloc/relay_state.dart';
+import 'package:iot_relay_app/features/home/event/relay_event.dart';
+import 'package:iot_relay_app/features/home/state/relay_state.dart';
 import 'package:iot_relay_app/features/home/models/relay.dart';
 import 'package:iot_relay_app/services/relay_services.dart';
 

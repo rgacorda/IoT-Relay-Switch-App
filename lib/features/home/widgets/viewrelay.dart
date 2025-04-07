@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iot_relay_app/features/home/bloc/relay_bloc.dart';
-import 'package:iot_relay_app/features/home/bloc/relay_event.dart';
-import 'package:iot_relay_app/features/home/bloc/relay_state.dart';
-
-
+import 'package:iot_relay_app/features/home/event/relay_event.dart';
+import 'package:iot_relay_app/features/home/state/relay_state.dart';
 
 class Viewrelay extends StatefulWidget {
-  const Viewrelay({ Key? key }) : super(key: key);
+  const Viewrelay({Key? key}) : super(key: key);
 
   @override
   _ViewrelayState createState() => _ViewrelayState();
@@ -33,6 +31,7 @@ class _ViewrelayState extends State<Viewrelay> {
                   onChanged: (value) {
                     context.read<RelayBloc>().add(ToggleRelay(id: relay.id));
                   },
+                  activeColor: Color.fromARGB(255, 54, 62, 149),
                 ),
               );
             },
