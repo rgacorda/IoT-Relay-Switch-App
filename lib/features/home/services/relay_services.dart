@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:iot_relay_app/features/home/models/relay.dart';
 
 class RelayServices {
-  static const String relayUrl = 'http://10.0.2.2:8000/api';
+  static const String relayUrl = 'https://white-ferret-277781.hostingersite.com/api';
 
   final Dio _dio = Dio(BaseOptions(baseUrl: relayUrl, headers: {'Content-Type': 'application/json'}));
 
@@ -23,10 +23,25 @@ class RelayServices {
   }
 }
 
-
   Future<void> toggleRelay(int id) async {
     try {
       await _dio.patch('/toggleRelay/$id');
+    } on DioException catch (e) {
+      throw Exception("Failed to toggle relay: ${e.message}");
+    }
+  }
+
+  Future<void> onRelay(int id) async {
+    try {
+      await _dio.patch('/onRelay/$id');
+    } on DioException catch (e) {
+      throw Exception("Failed to toggle relay: ${e.message}");
+    }
+  }
+
+  Future<void> offRelay(int id) async {
+    try {
+      await _dio.patch('/offRelay/$id');
     } on DioException catch (e) {
       throw Exception("Failed to toggle relay: ${e.message}");
     }
