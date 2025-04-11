@@ -18,4 +18,6 @@ class Relay {
         'id': id,
         'relay_status': relay_status ? 1 : 0,
       };
+
+
 }

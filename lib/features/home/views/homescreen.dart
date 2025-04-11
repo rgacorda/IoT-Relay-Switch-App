@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iot_relay_app/features/home/event/speech_event.dart';
 import 'package:iot_relay_app/features/home/widgets/mic_button.dart';
 import 'package:iot_relay_app/features/home/widgets/viewrelay.dart';
@@ -14,6 +15,7 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   bool isListening = false;
+
 
   void _onMicPressed() {
     setState(() => isListening = !isListening);
@@ -37,12 +39,15 @@ class _HomescreenState extends State<Homescreen> {
             children: [
               Image.asset('assets/logo/logo2.png', width: 160, height: 160),
               const Spacer(),
-              const Text(
-                'IoT Relay',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () => context.push('/wifi'),
+                child: Text(
+                  'WiFi',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -50,7 +55,7 @@ class _HomescreenState extends State<Homescreen> {
         ),
         backgroundColor: const Color.fromARGB(255, 54, 62, 149),
       ),
-      body: const Viewrelay(),
+      body: Viewrelay(),
       floatingActionButton: MicButton(
         onPressed: _onMicPressed,
         isListening: isListening,

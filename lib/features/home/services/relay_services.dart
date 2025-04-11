@@ -23,10 +23,25 @@ class RelayServices {
   }
 }
 
-
   Future<void> toggleRelay(int id) async {
     try {
       await _dio.patch('/toggleRelay/$id');
+    } on DioException catch (e) {
+      throw Exception("Failed to toggle relay: ${e.message}");
+    }
+  }
+
+  Future<void> onRelay(int id) async {
+    try {
+      await _dio.patch('/onRelay/$id');
+    } on DioException catch (e) {
+      throw Exception("Failed to toggle relay: ${e.message}");
+    }
+  }
+
+  Future<void> offRelay(int id) async {
+    try {
+      await _dio.patch('/offRelay/$id');
     } on DioException catch (e) {
       throw Exception("Failed to toggle relay: ${e.message}");
     }
