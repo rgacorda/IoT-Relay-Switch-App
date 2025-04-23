@@ -14,6 +14,9 @@ class SpeechBloc extends Bloc<SpeechEvent, SpeechState> {
   SpeechBloc({required this.relayBloc}) : super(SpeechInitial()) {
     on<StartListening>(_onStartListening);
     on<StopListening>(_onStopListening);
+    on<UpdatePartialText>((event, emit) {
+      emit(SpeechListening(text: event.partialText));
+    });
   }
 
   Future<void> _onStartListening(StartListening event, Emitter<SpeechState> emit) async {
@@ -26,19 +29,23 @@ class SpeechBloc extends Bloc<SpeechEvent, SpeechState> {
     );
 
     if (available) {
-      emit(SpeechListening());
+      // emit(SpeechListening());
+
+      emit(SpeechListening(text: ''));
       _speech.listen(
         onResult: (result) {
           if (result.finalResult) {
             _finalText = result.recognizedWords;
             print("🟢 Final: $_finalText");
           } else {
+            add(UpdatePartialText(result.recognizedWords));
             print("🟡 Partial: ${result.recognizedWords}");
           }
         },
         listenFor: Duration(seconds: 10),
         pauseFor: Duration(seconds: 3),
       );
+
     }
   }
 
@@ -60,7 +67,6 @@ class SpeechBloc extends Bloc<SpeechEvent, SpeechState> {
     numberWords.forEach((word, digit) {
       input = input.replaceAll(RegExp(r'\b' + word + r'\b'), digit);
     });
-
     return input;
   }
 
@@ -72,6 +78,7 @@ class SpeechBloc extends Bloc<SpeechEvent, SpeechState> {
     _handleVoiceCommand(_finalText.toLowerCase());
 
     emit(SpeechStopped(finalText: _finalText));
+    await Future.delayed(Duration(seconds: 2));
 
   }
 
